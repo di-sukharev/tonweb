@@ -17,11 +17,9 @@ if (isCryptoAvailable) { // web
  * @return  {Promise<ArrayBuffer>}
  */
 function sha256(bytes) {
-    if (isCryptoAvailable) { // web
-        return crypto.subtle.digest("SHA-256", bytes);
-    } else {  // nodejs or react-native
-        return myCrypto.subtle.digest({name:"SHA-256"}, bytes);
-    }
+    return isCryptoAvailable
+    ? crypto.subtle.digest('SHA-256', bytes)
+    : globalThis.crypto.subtle.digest({ name: 'SHA-256' }, bytes)
 }
 
 /**
